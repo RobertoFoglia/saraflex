@@ -1,15 +1,21 @@
 import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import { ServerInstanceHandler } from './src/app/core/server/services/server-instance-handler';
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
-    serve = args.some(val => val === '--serve');
+  serve = args.some(val => val === '--serve');
+
+export const isDev = require('electron-is-dev');
+const serverInstanceHandler = new ServerInstanceHandler(isDev, app);
 
 function createWindow(): BrowserWindow {
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+  serverInstanceHandler.startup();
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -25,7 +31,8 @@ function createWindow(): BrowserWindow {
 
   if (serve) {
     require('electron-reload')(__dirname, {
-      electron: require(`${__dirname}/node_modules/electron`)
+     // electron: require(`${__dirname}/node_modules/electron`)
+     electron: path.join(`${__dirname}/node_modules/electron`, __dirname, `${__dirname}/src/app/core/server/services`, 'src/app/core')
     });
     win.loadURL('http://localhost:4200');
   } else {
@@ -63,6 +70,7 @@ try {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
+      serverInstanceHandler.shutdown();
       app.quit();
     }
   });
