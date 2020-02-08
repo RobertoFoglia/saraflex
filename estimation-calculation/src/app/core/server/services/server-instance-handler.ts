@@ -1,4 +1,4 @@
-import { BrowserWindow, App } from "electron"
+import { BrowserWindow, App , screen} from "electron"
 import { fork, ChildProcess } from "child_process"
 import { async } from "rxjs/internal/scheduler/async";
 
@@ -15,32 +15,34 @@ export class ServerInstanceHandler {
     ) { }
 
     startup(): void {
-        const serverSocket = this.findOpenSocket();
-        if (this.isDev) {
-            this.createBackgroundWindow(serverSocket)
-        } else {
-            this.createBackgroundProcess(serverSocket)
-        }
+        this.findOpenSocket().then( serverSocketName => {
+            if (this.isDev) {
+                this.createBackgroundWindow(serverSocketName);
+            } else {
+                this.createBackgroundProcess(serverSocketName)
+            }
+        });
     }
 
     shutdown(): void {
         if (this.serverProcess) {
             this.serverProcess.kill()
             this.serverProcess = null
-          }
+        }
     }
 
     private createBackgroundWindow(socketName: any) {
+        const { width, height } = screen.getPrimaryDisplay().workAreaSize;
         const win = new BrowserWindow({
-            x: 500,
-            y: 300,
-            width: 700,
-            height: 500,
+            x: 0,
+            y: 0,
+            width: width,
+            height: height,
             show: true,
             webPreferences: {
                 nodeIntegration: true
             }
-        })
+        });
         win.loadURL(`file://${__dirname}/server-dev.html`)
         win.webContents.openDevTools();
         win.webContents.on('did-finish-load', () => {
@@ -51,9 +53,10 @@ export class ServerInstanceHandler {
     async findOpenSocket() {
         let currentSocket = 1;
         console.log('checking', currentSocket);
-        const socketName = this.app.getName() + currentSocket;
+        let socketName = this.app.getName() + currentSocket;
         while (await this.isSocketTaken(socketName)) {
             currentSocket++;
+            socketName = this.app.getName() + currentSocket;
             console.log('checking', currentSocket);
         }
         console.log('found socket', currentSocket);
