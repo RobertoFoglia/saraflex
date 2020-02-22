@@ -1,9 +1,11 @@
-import { BrowserWindow, App , screen} from "electron"
-import { fork, ChildProcess } from "child_process"
-import { async } from "rxjs/internal/scheduler/async";
+import { ChildProcess, fork } from "child_process";
+import { App, BrowserWindow, screen } from "electron";
+import { ServerHandlers } from "./handlers/server-handlers";
 
 const ipc = require('node-ipc');
 ipc.config.silent = true;
+
+export const serverHandlers = new ServerHandlers();
 
 export class ServerInstanceHandler {
 

@@ -166,7 +166,7 @@
           }
         }
       }
-    }
+    },
   },
   "defaultProject": "angular-electron",
   "schematics": {

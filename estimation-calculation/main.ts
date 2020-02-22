@@ -14,7 +14,6 @@ function createWindow(): BrowserWindow {
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
-
   serverInstanceHandler.startup();
 
   // Create the browser window.
@@ -26,6 +25,7 @@ function createWindow(): BrowserWindow {
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
+      preload: __dirname + '/client-preload.js'
     },
   });
 

@@ -11,6 +11,9 @@ src/**/*.js
 !src/karma.conf.js
 *.js.map
 
+!src/app/core/server/services/server-ipc.js
+!src/app/core/server/services/server.js
+
 # dependencies
 /node_modules
 
