@@ -1,11 +1,11 @@
 import { ChildProcess, fork } from "child_process";
 import { App, BrowserWindow, screen } from "electron";
-import { ServerHandlers } from "./handlers/server-handlers";
+import { Dispatcher } from "./handlers/dispatcher";
 
 const ipc = require('node-ipc');
 ipc.config.silent = true;
 
-export const serverHandlers = new ServerHandlers();
+export const dispatcher = new Dispatcher();
 
 export class ServerInstanceHandler {
 
