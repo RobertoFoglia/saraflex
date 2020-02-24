@@ -1,4 +1,5 @@
 import { Observable, of } from "rxjs";
+import container from "../../config/ioc_config";
 
 export class Dispatcher {
     handlers = {};
@@ -11,6 +12,7 @@ export class Dispatcher {
     }
 
     dispatch(id: string, resourceUri: string, args: any): Observable<any> {
+        console.log(container);
         // const serviceToken = SERVICES_TYPES[resourceUri.substr(0, resourceUri.indexOf('/') - 1)];
         // console.log(container);
         // const claDD = container.resolve(ProductServiceImpl);

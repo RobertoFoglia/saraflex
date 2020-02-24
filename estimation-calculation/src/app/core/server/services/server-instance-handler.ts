@@ -1,12 +1,15 @@
-import "reflect-metadata"
 import { ChildProcess, fork } from "child_process";
 import { App, BrowserWindow, screen } from "electron";
 import { Dispatcher } from "./handlers/dispatcher";
+import { beanRegistration } from "../../../backend/config/services-register";
+import container from "../config/ioc_config";
 
 const ipc = require('node-ipc');
 ipc.config.silent = true;
 
 export const dispatcher = new Dispatcher();
+
+beanRegistration(container);
 
 export class ServerInstanceHandler {
 
