@@ -1,6 +1,4 @@
 import { Observable, of } from "rxjs";
-import { SERVICES_TYPES } from "../../../../backend/services/interfaces/services-types";
-import {container} from "tsyringe";
 
 export class Dispatcher {
     handlers = {};
@@ -13,10 +11,12 @@ export class Dispatcher {
     }
 
     dispatch(id: string, resourceUri: string, args: any): Observable<any> {
-        const serviceToken = SERVICES_TYPES[resourceUri.substr(0, resourceUri.indexOf('/') - 1)];
-        const service = container.resolve(serviceToken);
-        const method = Reflect.getMetadata(resourceUri.substr( resourceUri.indexOf('/')), service);
-        method(args);
+        // const serviceToken = SERVICES_TYPES[resourceUri.substr(0, resourceUri.indexOf('/') - 1)];
+        // console.log(container);
+        // const claDD = container.resolve(ProductServiceImpl);
+        // const service = container.resolve(serviceToken);
+        // const method = Reflect.getMetadata(resourceUri.substr( resourceUri.indexOf('/')), service);
+        // method(args);
         // reflect-data
 
         // stringfy args

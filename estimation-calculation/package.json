@@ -94,11 +94,11 @@
   },
   "dependencies": {
     "electron-is-dev": "1.1.0",
+    "inversify": "5.0.1",
     "knex": "0.20.8",
     "node-ipc": "9.1.1",
     "reflect-metadata": "0.1.13",
     "sqlite3": "4.1.1",
-    "tslib": "1.10.0",
-    "tsyringe": "4.1.0"
+    "tslib": "1.10.0"
   }
 }
