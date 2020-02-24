@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import { ChildProcess, fork } from "child_process";
 import { App, BrowserWindow, screen } from "electron";
 import { Dispatcher } from "./handlers/dispatcher";

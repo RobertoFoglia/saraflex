@@ -1,4 +1,3 @@
-
 let serverInstanceHandler = require('./server-instance-handler')
 let ipc = require('./web-socket-handler')
 
