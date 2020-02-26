@@ -13,6 +13,7 @@ src/**/*.js
 
 !src/app/core/server/services/server-ipc.js
 !src/app/core/server/services/server.js
+!src/app/core/server/services/web-socket-handler.js
 
 # dependencies
 /node_modules

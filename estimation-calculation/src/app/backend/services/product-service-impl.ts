@@ -1,14 +1,14 @@
 import { ProductService } from "./interfaces/product-service";
-import { injectable, inject } from "inversify";
+import { injectable } from "inversify";
 
 @injectable()
 export class ProductServiceImpl implements ProductService {
     constructor() {
-        
+
     }
 
-    @Reflect.metadata("items", "")
+    @Reflect.metadata("items", "findAll")
     findAll() {
-
+      console.log('findAll call --> -->');
     }
 }

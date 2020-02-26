@@ -12,8 +12,21 @@ export class Dispatcher {
     }
 
     dispatch(id: string, resourceUri: string, args: any): Observable<any> {
-        console.log(container);
-        // const serviceToken = SERVICES_TYPES[resourceUri.substr(0, resourceUri.indexOf('/') - 1)];
+        // const serviceInstances = container.get(resourceUri.substr(0, resourceUri.indexOf('/') - 1));
+        const serviceInstances = container.get("products");
+        // const methodName = Reflect.getMetadata(resourceUri.substr( resourceUri.indexOf('/')), serviceInstances);
+        const methodName = Reflect.getMetadata("items", serviceInstances, "findAll"); // it works
+        // delete the findAll
+        const listofprop = Reflect.getOwnMetadataKeys(serviceInstances);
+        serviceInstances['findAll']();
+        for (const key in serviceInstances as any) {
+          console.log(key); // it works
+          console.log(Reflect.getMetadata("items", serviceInstances, key));
+        }
+
+        // Create annotations https://rbuckton.github.io/reflect-metadata/#introduction
+
+
         // console.log(container);
         // const claDD = container.resolve(ProductServiceImpl);
         // const service = container.resolve(serviceToken);
