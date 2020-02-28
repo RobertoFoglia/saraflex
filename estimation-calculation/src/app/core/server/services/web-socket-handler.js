@@ -23,9 +23,8 @@ function init(socketName, dispatcher) {
           ipc.server.emit(
             socket,
             'message',
-            JSON.stringify({ type: 'error', id })
+            JSON.stringify({ type: 'error', id, error })
           )
-          throw error
         }
       )
 
