@@ -23,7 +23,11 @@ export class ServerInstanceHandler {
     startup(): void {
         this.findOpenSocket().then( serverSocketName => {
             if (this.isDev) {
-                this.createBackgroundWindow(serverSocketName);
+                //this.createBackgroundWindow(serverSocketName);
+                this.createBackgroundProcessInDebug(serverSocketName);
+                this.serverProcess.on('message', msg => {
+                    console.log(msg)
+                })
             } else {
                 this.createBackgroundProcess(serverSocketName)
             }
@@ -83,6 +87,16 @@ export class ServerInstanceHandler {
                 });
             });
         });
+    }
+
+    private createBackgroundProcessInDebug(socketName) {
+        //process.execArgv.push('--inspect-brk=' + (40894));   
+        process.execArgv.push('--inspect-brk=' + (40894));   
+        this.serverProcess = fork(__dirname + '/server.js', [
+            '--subprocess',
+            this.app.getVersion(),
+            socketName
+        ])
     }
 
     private createBackgroundProcess(socketName) {
