@@ -6,11 +6,13 @@ export class Dispatcher {
     constructor() { }
 
     dispatch(resourceUri: string, args: any): Observable<any> {
-        const serviceInstances = container.get(resourceUri.substr(0, resourceUri.indexOf('/') - 1));
-        if (serviceInstances === undefined) {
+        let serviceInstances = null;
+        try {
+            serviceInstances = container.get(resourceUri.substr(0, resourceUri.indexOf('/') - 1));
+        } catch (error) {
             throw new Error('Dispatcher - service not found. Please inject service like ProductServiceImpl.');
-            
         }
+
         const callMappingName = resourceUri.substr(resourceUri.indexOf('/'));
         for (const key in serviceInstances as any) {
             let propertyValue = getCallMapping(serviceInstances, key);
