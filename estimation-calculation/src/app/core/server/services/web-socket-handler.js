@@ -7,9 +7,9 @@ function init(socketName, dispatcher) {
   ipc.serve(() => {
     ipc.server.on('message', (data, socket) => {
       let msg = JSON.parse(data)
-      let { id, name, args } = msg
+      let {id, serviceUri, args } = msg
 
-      dispatcher.dispatch(args).then(
+      dispatcher.dispatch(serviceUri, args).subscribe(
         result => {
           ipc.server.emit(
             socket,
