@@ -91,7 +91,7 @@ export class ServerInstanceHandler {
 
     private createBackgroundProcessInDebug(socketName) {
         //process.execArgv.push('--inspect-brk=' + (40894));   
-        process.execArgv.push('--inspect-brk=' + (40894));   
+        process.execArgv.push('--inspect=' + (40894));   
         this.serverProcess = fork(__dirname + '/server.js', [
             '--subprocess',
             this.app.getVersion(),
